@@ -3,8 +3,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.min.edu</groupId>
-	<artifactId>Chatting</artifactId>
-	<name>Chatting</name>
+	<artifactId>DoitDoitChat</artifactId>
+	<name>DoitDoitChat</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
@@ -209,6 +209,12 @@
       </dependency>
       
       <dependency>
+		    <groupId>com.googlecode.json-simple</groupId>
+		    <artifactId>json-simple</artifactId>
+		    <version>1.1.1</version>
+		</dependency>
+      
+      <dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
 			<version>${org.springframework-version}</version>
@@ -221,7 +227,7 @@
 		</dependency>
 	</dependencies>
     <build>
-      	<finalName>Chatting</finalName>
+      	<finalName>DoitDoitChat</finalName>
       	<plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

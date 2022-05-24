@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.min.edu.vo.MemberVo;
+import com.min.edu.chat.vo.MemberVo;
 
 /**
  * Handles requests for the application home page.

@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.min.edu.vo.MemberVo;
+import com.min.edu.chat.vo.MemberVo;
 
 @Controller
 public class ChatController {
