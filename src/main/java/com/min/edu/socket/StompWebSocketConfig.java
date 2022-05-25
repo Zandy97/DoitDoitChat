@@ -24,7 +24,7 @@ public class StompWebSocketConfig extends AbstractWebSocketMessageBrokerConfigur
 
 	@Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/endpoint").setAllowedOrigins("*").withSockJS();
+        registry.addEndpoint("/stomp/chat").setAllowedOrigins("http://localhost:8077").withSockJS();
         //WebSocket 또는 SockJS Client가 웹소켓 핸드셰이크 커넥션을 생성할 경로이다.
     }
 	

@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	console.log("js실행");
-	var sock = new SockJS("/DoitDoitChat/endpoint");
+	var sock = new SockJS("/DoitDoitChat/stomp/chat");
 	console.log(sock);
 	
 	var roomName;
