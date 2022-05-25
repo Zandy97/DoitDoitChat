@@ -25,7 +25,7 @@ SELECT jt.IDS AS EMP_ID
 		 	JDATE VARCHAR(30) PATH '$.join'
 		)
 	) AS jt
-	WHERE ROOM_ID = '5'
+	WHERE ROOM_ID = '2022052800'
 	ORDER BY TO_DATE(jt.JDATE,'YYYYMMDDHH24MISS'), IDS DESC;
 
 -- 채팅 조회
@@ -59,15 +59,14 @@ INSERT INTO CHAT_FILE (FILE_CHAT_ID,FILE_CHAT_UUID,FILE_CHAT_ORIGINNM,FILE_CHAT_
 
 -- 채팅방 생성
 INSERT INTO CHAT_ROOM (ROOM_ID, ROOM_NAME,ROOM_MEM)
-	VALUES('2','비','{ROOM : [{id:2022052202,auth:A,join:20220523111300},
-					            {id:2022052604,auth:M,join:20220523111300},
-					            {id:2022054000,auth:M,join:20220523111300}]}');
-					         
+	VALUES('51','비','{"ROOM" : [{"id":"2022052202","auth":"A","join":"20220523111300"},
+					            {"id":"2022052604","auth":"M","join":"20220523111300"},
+					            {"id":"2022054000","auth":"M","join":"20220523111300"}]}');
+					           
 -- 파일 다운로드(originalName)
 SELECT FILE_CHAT_ORIGINNM || '.' || FILE_CHAT_TYPE 
 	FROM CHAT_FILE
 	WHERE FILE_CHAT_ID = '1';
-	
 
 SELECT * FROM CHAT;
 SELECT * FROM CHAT_ROOM cr ;

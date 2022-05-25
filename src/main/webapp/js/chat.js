@@ -1,9 +1,15 @@
 $(document).ready(function() {
 	console.log("js실행");
-	var sock = new SockJS("http://localhost:8077/Chatting/endpoint");
-	var stomp = Stomp.over(sock);
+	var sock = new SockJS("/DoitDoitChat/endpoint");
+	console.log(sock);
 	
-	stomp.connect({},function(){
-		console.log("STOMP CONN");
+	var roomName;
+	var roomId;
+	var username;
+	
+	var stomp = Stomp.over(sock);
+	stomp.connect({}, function(e){
+		console.log(e);
+		console.log(stomp);
 	});
 });
