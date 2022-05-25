@@ -22,7 +22,7 @@
 	</select>
 	
 	<!-- 채팅 조회 -->
-	<select id="selChat" parameterType="java.util.Map" resultType="ChatVo">
+	<select id="selChat" parameterType="java.util.Map" resultType="ChatJoinVo">
 		SELECT CHAT_ID,EMP_ID, CHAT_CON,CHAT_TIME,CHAT_TYPE
     		FROM CHAT 
         	WHERE ROOM_ID = #{room_id}  
@@ -37,7 +37,7 @@
                     ) AS jt
                     WHERE IDS = #{emp_id} AND ROOM_ID = #{room_id}
         		)
-        	ORDER BY CHAT_TIME DESC
+        	ORDER BY CHAT_TIME ASC
 	</select>
 	
 	<!-- 채팅방 멤버 조회 -->

@@ -33,11 +33,6 @@ public class HomeController {
 	public String home(HttpSession session, Model model,MemberVo mVo) {		
 		logger.info("home login {}",mVo);
 		model.addAttribute("mem", mVo);
-		return "redirect:/chat.do";
-	}
-	
-	@RequestMapping(value = "/ex.do", method = RequestMethod.GET)
-	public String ex() {
-		return "ex";
+		return "redirect:/roomList.do";
 	}
 }
