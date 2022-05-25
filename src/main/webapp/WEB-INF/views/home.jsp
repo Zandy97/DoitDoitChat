@@ -12,5 +12,6 @@
 		<input type="text" placeholder="id를 입력해 주세요" name="id">
 		<input type="submit" value="로그인 하기">
 	</form>
+	<h2>ㄴ어라넝러ㅣㅏㄹ이ㅏ</h2>
 </body>
 </html>
