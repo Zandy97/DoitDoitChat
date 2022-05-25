@@ -1,21 +1,23 @@
 -- 방 조회
-SELECT ch.ROOM_ID, cr.ROOM_NAME, CHAT_TIME, CHAT_ID, EMP_ID
-	FROM CHAT_ROOM cr,
-		JSON_TABLE(ROOM_MEM, '$.ROOM[*]'
-		COLUMNS (
-			 IDS VARCHAR(20) PATH '$.id'
-			)
-		) AS jt,
-		(SELECT ROOM_ID, EMP_ID ,CHAT_ID ,CHAT_TIME ,ROW_NUMBER () OVER(PARTITION BY ROOM_ID ORDER BY CHAT_TIME DESC) AS mx
-			FROM CHAT
-		) ch
-	WHERE IDS = '5'
-	AND cr.ROOM_ID = ch.ROOM_ID
-	AND mx = 1
-	ORDER BY CHAT_TIME DESC;
+SELECT ch.ROOM_ID, ROOM_NAME, CHAT_TIME, CHAT_ID, CHAT_TYPE ,EMP_ID,CHAT_CON
+    		FROM CHAT_ROOM cr,
+	        	JSON_TABLE(ROOM_MEM, '$.ROOM[*]'
+	            	COLUMNS (
+	                	IDS VARCHAR(20) PATH '$.id'
+	            	)
+	        	) AS jt,
+	        	(SELECT ROOM_ID, EMP_ID ,CHAT_ID ,
+	        			CHAT_TIME , CHAT_TYPE, CHAT_CON,
+	                    ROW_NUMBER () OVER(PARTITION BY ROOM_ID ORDER BY CHAT_TIME DESC) AS mx
+	            	FROM CHAT
+	        	) ch
+    		WHERE IDS = '5'
+    		AND cr.ROOM_ID = ch.ROOM_ID
+    		AND mx = 1
+    		ORDER BY CHAT_ID
 
 -- 채팅방 멤버 조회
-SELECT jt.IDS AS EMP_ID, JDATE
+SELECT jt.IDS AS EMP_ID
 	FROM CHAT_ROOM,
 	JSON_TABLE(ROOM_MEM, '$.ROOM[*]'
 		COLUMNS (
