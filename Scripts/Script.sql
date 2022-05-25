@@ -11,7 +11,7 @@ SELECT ch.ROOM_ID, ROOM_NAME, CHAT_TIME, CHAT_ID, CHAT_TYPE ,EMP_ID,CHAT_CON
 	                    ROW_NUMBER () OVER(PARTITION BY ROOM_ID ORDER BY CHAT_TIME DESC) AS mx
 	            	FROM CHAT
 	        	) ch
-    		WHERE IDS = '5'
+    		WHERE IDS = '2022052800'
     		AND cr.ROOM_ID = ch.ROOM_ID
     		AND mx = 1
     		ORDER BY CHAT_ID;
@@ -25,7 +25,7 @@ SELECT jt.IDS AS EMP_ID
 		 	JDATE VARCHAR(30) PATH '$.join'
 		)
 	) AS jt
-	WHERE ROOM_ID = '2'
+	WHERE ROOM_ID = '5'
 	ORDER BY TO_DATE(jt.JDATE,'YYYYMMDDHH24MISS'), IDS DESC;
 
 -- 채팅 조회
@@ -41,7 +41,7 @@ SELECT CHAT_ID, EMP_ID, CHAT_CON, CHAT_TIME, CHAT_TYPE
 		 			JDATE VARCHAR(30) PATH '$.join'
 				)
 			) AS jt
-			WHERE IDS = '5' AND ROOM_ID = '4'
+			WHERE IDS = '2022052800' AND ROOM_ID = '4'
 	)
 	ORDER BY TO_NUMBER(CHAT_ID);
 
@@ -59,9 +59,9 @@ INSERT INTO CHAT_FILE (FILE_CHAT_ID,FILE_CHAT_UUID,FILE_CHAT_ORIGINNM,FILE_CHAT_
 
 -- 채팅방 생성
 INSERT INTO CHAT_ROOM (ROOM_ID, ROOM_NAME,ROOM_MEM)
-	VALUES('2','비','{ROOM : [{id:2,auth:A,join:20220523111300},
-					            {id:4,auth:M,join:20220523111300},
-					            {id:11,auth:M,join:20220523111300}]}');
+	VALUES('2','비','{ROOM : [{id:2022052202,auth:A,join:20220523111300},
+					            {id:2022052604,auth:M,join:20220523111300},
+					            {id:2022054000,auth:M,join:20220523111300}]}');
 					         
 -- 파일 다운로드(originalName)
 SELECT FILE_CHAT_ORIGINNM || '.' || FILE_CHAT_TYPE 
