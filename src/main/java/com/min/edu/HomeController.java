@@ -35,9 +35,4 @@ public class HomeController {
 		model.addAttribute("mem", mVo);
 		return "redirect:/chat.do";
 	}
-	
-	@RequestMapping(value = "/ex.do", method = RequestMethod.GET)
-	public String ex() {
-		return "ex";
-	}
 }

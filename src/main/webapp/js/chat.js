@@ -3,7 +3,7 @@ $(document).ready(function() {
 	var sock = new SockJS("http://localhost:8077/Chatting/endpoint");
 	var stomp = Stomp.over(sock);
 	
-	stomp.connection({}, function (){
-		console.log("STOMP Connection");
+	stomp.connect({},function(){
+		console.log("STOMP CONN");
 	});
 });
