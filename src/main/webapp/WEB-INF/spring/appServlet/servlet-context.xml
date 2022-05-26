@@ -18,7 +18,6 @@
 	<!-- Enables the Spring MVC @Controller programming model -->
 	
 	<mvc:annotation-driven/>
-	<task:annotation-driven/>
 	<mvc:default-servlet-handler/>
 	
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
