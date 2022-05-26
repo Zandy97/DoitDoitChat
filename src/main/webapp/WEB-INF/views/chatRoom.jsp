@@ -29,7 +29,7 @@
 				<tr>
 					<td>				
 						<form>
-							<input type="text" id="con"><input type="submit" value="전송">
+							<input type="text" id="con"><button id="btnChatSend">전송</button>
 						</form>
 					</td>	
 				</tr>
