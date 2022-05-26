@@ -63,14 +63,16 @@ public class ChatController {
     public String getRoom(String room_Id, HttpSession session, Model model) {
     	logger.info("ChatController getRoom {}",room_Id);
     	MemberVo mVo = (MemberVo) session.getAttribute("mem");
-		String userId = mVo.getId();
+		String emp_id = mVo.getId();
     	
     	Map<String, String> map = new HashMap<String, String>();
     	map.put("room_id", room_Id);
-    	map.put("emp_id", userId);
+    	map.put("emp_id", emp_id);
     	
     	List<ChatVo> chatList = service.selChat(map);
     	
+    	model.addAttribute("room_id",room_Id);
+    	model.addAttribute("emp_id", emp_id);
     	model.addAttribute("chatList", chatList);
     	return "chatRoom";
     }

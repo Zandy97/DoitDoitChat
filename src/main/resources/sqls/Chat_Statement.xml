@@ -22,7 +22,7 @@
 	</select>
 	
 	<!-- 채팅 조회 -->
-	<select id="selChat" parameterType="java.util.Map" resultType="ChatJoinVo">
+	<select id="selChat" parameterType="java.util.Map" resultType="ChatVo">
 		SELECT CHAT_ID,EMP_ID, CHAT_CON,CHAT_TIME,CHAT_TYPE
     		FROM CHAT 
         	WHERE ROOM_ID = #{room_id}  
