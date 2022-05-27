@@ -1,10 +1,20 @@
 package com.min.edu.socket;
 
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.socket.config.annotation.AbstractWebSocketMessageBrokerConfigurer;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
+
+import com.min.edu.chat.vo.ChatJoinVo;
+import com.min.edu.chat.vo.MemberVo;
 
 @Configuration
 @EnableWebSocketMessageBroker//메시지 플로우를 모으기 위해 컴포넌트를 구성
@@ -24,7 +34,9 @@ public class StompWebSocketConfig extends AbstractWebSocketMessageBrokerConfigur
 
 	@Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/stomp/chat").setAllowedOrigins("http://localhost:8077").withSockJS();
+        registry.addEndpoint("/stompSocket").
+        		 setAllowedOrigins("*").
+        		 withSockJS();
         //WebSocket 또는 SockJS Client가 웹소켓 핸드셰이크 커넥션을 생성할 경로이다.
     }
 	
