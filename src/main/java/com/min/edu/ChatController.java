@@ -1,30 +1,18 @@
 package com.min.edu;
 
-import java.net.http.WebSocket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
-import org.json.simple.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
-import com.min.edu.chat.vo.ChatJoinVo;
 import com.min.edu.chat.vo.ChatVo;
-import com.min.edu.chat.vo.MemberVo;
-import com.min.edu.model.service.IChatService;
 
 @Controller
 public class ChatController {
@@ -34,27 +22,47 @@ public class ChatController {
 	@Autowired
 	private SimpMessagingTemplate template;
 		
-	private Map<String, List<String>> listMem;
-	private Map<String, List<ChatVo>> listChat;
+	private List<String> listMem;
+	private List<ChatVo> listChat;
+	
+	private Map<String, List<String>> mapMem;
+	private Map<String, List<ChatVo>> mapChat;
 	
 	public ChatController() {
-		listMem = new HashMap<String,List<String>>();
-		listChat = new HashMap<String,List<ChatVo>>();
+		listChat = new ArrayList<ChatVo>();
+		listMem = new ArrayList<String>();
+		
+		mapMem = new HashMap<String,List<String>>();
+		mapChat = new HashMap<String,List<ChatVo>>();
 	}
 		
 	//채팅방에 들어왔을때
 	@MessageMapping(value = "/chat/enter")
     public void enter(ChatVo cVo){
 		logger.info("@ChatController enter() : {}", cVo);
-		String emp_id = cVo.getEmp_id();
-        String ms = emp_id + "님이 채팅방에 참여하였습니다.";
-        logger.info("@ChatController enter() : {}", ms);
-        template.convertAndSend("/sub/chat/room/" + cVo.getRoom_id(), "{\"emp_id\":\""+emp_id+"\",\"ms\":\""+ms+"\"}");
+		logger.info("enterMem {}", mapMem.get(cVo.getRoom_id()));
+		
+		logger.info("^^^^ 해당 방 멤버 {} ^^^^",mapMem.get(cVo.getRoom_id()));
+		if(mapMem.get(cVo.getRoom_id()) != null) {
+			listMem = mapMem.get(cVo.getRoom_id());
+			logger.info("멤버 있음 {}",listMem);
+		}else {
+			listMem = new ArrayList<String>();
+		}
+		
+		if (!listMem.contains(cVo.getEmp_id())) {
+			listMem.add(cVo.getEmp_id());
+			mapMem.put(cVo.getRoom_id(), listMem);
+		}
+	
+		logger.info("^^^^^^ 멤버 확인 {} ^^^^^^",mapMem);
+        template.convertAndSend("/sub/chatMem/room/" + cVo.getRoom_id(), mapMem.get(cVo.getRoom_id()));
     }
 
-	
+	//채팅 메시지
     @MessageMapping(value = "/chat/message")
     public void message(ChatVo cVo){
+    	logger.info("@ChatController message() : {}", cVo);
         template.convertAndSend("/sub/chat/room/" + cVo.getRoom_id(), cVo);
     }
 }
