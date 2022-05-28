@@ -35,7 +35,7 @@
 				<tr>
 					<td>				
 						<form>
-							<input type="text" id="con"><button id="btnChatSend">전송</button>
+							<input type="text" id="con"><button id="chatSend">전송</button>
 						</form>
 					</td>	
 				</tr>

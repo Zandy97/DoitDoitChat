@@ -1,12 +1,11 @@
-$(document).ready(function() {
+window.onload = function() {
 	console.log("js실행");
 	var sock = new SockJS("/DoitDoitChat/stompSocket");
 	console.log(sock);
-
-	var roomName;
-	var room_id = $("#roomId").val();
+	
+	var room_id = document.getElementById("roomId").value;
 	console.log("roomId", room_id);
-	var username = $("#empId").attr("value");
+	var username = document.getElementById("empId").value;
 	console.log("empId", username);
 
 	var stomp = Stomp.over(sock);
@@ -31,11 +30,11 @@ $(document).ready(function() {
 		stomp.send('/pub/chat/enter', {}, JSON.stringify({ room_id: room_id, emp_id: username }));
 	});
 
-	$("#button-send").on("click", function(e) {
-		var msg = document.getElementById("msg");
+	var btnSend = document.getElementById("chatSend");
+	btnSend.addEventListener("click",function(){
+		var chatCon = document.getElementById("chatCon");
 
-		console.log(username + ":" + msg.value);
-		stomp.send('/pub/chat/message', {}, JSON.stringify({ roomId: room_id, message: msg.value, writer: username }));
+		stomp.send('/pub/chat/message', {}, JSON.stringify({ room_Id: room_id, chat_con: chatCon, emp_id: username }));
 		msg.value = '';
 	});
-});
+};

@@ -1,11 +1,14 @@
 package com.min.edu;
 
+import java.net.http.WebSocket;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +34,14 @@ public class ChatController {
 	@Autowired
 	private SimpMessagingTemplate template;
 		
+	private Map<String, List<String>> listMem;
+	private Map<String, List<ChatVo>> listChat;
+	
+	public ChatController() {
+		listMem = new HashMap<String,List<String>>();
+		listChat = new HashMap<String,List<ChatVo>>();
+	}
+		
 	//채팅방에 들어왔을때
 	@MessageMapping(value = "/chat/enter")
     public void enter(ChatVo cVo){
@@ -43,7 +54,6 @@ public class ChatController {
 
 	
     @MessageMapping(value = "/chat/message")
-    @SendTo("/sub/chat/room")
     public void message(ChatVo cVo){
         template.convertAndSend("/sub/chat/room/" + cVo.getRoom_id(), cVo);
     }
