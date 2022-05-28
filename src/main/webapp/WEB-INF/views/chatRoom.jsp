@@ -34,13 +34,17 @@
 			<tfoot>
 				<tr>
 					<td>				
-						<form>
-							<input type="text" id="con"><button id="chatSend">전송</button>
-						</form>
+						<input type="text" id="chatCon"><button id="chatSend">전송</button>
 					</td>	
 				</tr>
 			</tfoot>
 		</table>
+	</div>
+	<div>
+		<div>현재 채팅 멤버</div>
+		<div id="chat_memList">
+		
+		</div>
 	</div>
 </body>
 </html>
