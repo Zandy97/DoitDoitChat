@@ -92,6 +92,7 @@ public class ChatController {
     //파일 메시지
     @MessageMapping(value = "/chat/file")
     public void fileMessage(ChatFileVo cFVo) {
+    	logger.info("@ChatController message() : {}", cFVo);
     	ByteBuffer byteBuffer = cFVo.getFile().getPayload();
     	
     	Date date = new Date();
