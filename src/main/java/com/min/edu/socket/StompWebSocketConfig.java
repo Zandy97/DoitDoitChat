@@ -1,6 +1,10 @@
 package com.min.edu.socket;
 
+import java.util.List;
+
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.converter.ByteArrayMessageConverter;
+import org.springframework.messaging.converter.MessageConverter;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.AbstractWebSocketMessageBrokerConfigurer;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
@@ -38,5 +42,11 @@ public class StompWebSocketConfig extends AbstractWebSocketMessageBrokerConfigur
     	//pub 경로로 시작하는 STOMP 메세지의 "destination" 헤더는 
     	// @Controller 객체의 @MessageMapping 메서드로 라우팅된다.
         config.enableSimpleBroker("/sub");//수신
+    }
+    
+    @Override    
+    public boolean configureMessageConverters(List<MessageConverter> messageConverters) {        
+    	messageConverters.add(new ByteArrayMessageConverter());        
+    	return false;    
     }
 }
