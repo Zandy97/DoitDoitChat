@@ -1,20 +1,10 @@
 package com.min.edu.socket;
 
-import java.util.List;
-
-import javax.servlet.http.HttpSession;
-
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.socket.config.annotation.AbstractWebSocketMessageBrokerConfigurer;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
-
-import com.min.edu.chat.vo.ChatJoinVo;
-import com.min.edu.chat.vo.MemberVo;
 
 @Configuration
 @EnableWebSocketMessageBroker//메시지 플로우를 모으기 위해 컴포넌트를 구성

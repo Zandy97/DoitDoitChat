@@ -34,8 +34,13 @@
 			<tfoot>
 				<tr>
 					<td>				
-						<input type="text" id="chatCon"><button id="chatSend">전송</button>
+						<input type="text" id="chatCon" onkeyup="enterkey()"><button id="chatSend">전송</button>
 					</td>	
+				</tr>
+				<tr>
+					<td>
+						<input multiple="multiple" type="file" name="file" id="chatFile">
+					</td>
 				</tr>
 			</tfoot>
 		</table>

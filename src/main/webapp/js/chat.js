@@ -1,12 +1,15 @@
 var stomp;
+var room_id;
+var username;
+var chatCon;
 window.onload = function() {
 	console.log("js실행");
 	var sock = new SockJS("/DoitDoitChat/stompSocket");
 	console.log(sock);
 	
-	var room_id = document.getElementById("roomId").value;
+	room_id = document.getElementById("roomId").value;
 	console.log("roomId", room_id);
-	var username = document.getElementById("empId").value;
+	username = document.getElementById("empId").value;
 	console.log("empId", username);
 
 	stomp = Stomp.over(sock);
@@ -59,16 +62,58 @@ window.onload = function() {
 	// 채팅입력
 	var btnSend = document.getElementById("chatSend");
 	btnSend.addEventListener("click",function(){
-		var chatCon = document.getElementById("chatCon");
+		chatCon = document.getElementById("chatCon");
 		console.log("send",chatCon.value);
-
-		stomp.send('/pub/chat/message', {}, JSON.stringify({ room_id: room_id, chat_con: chatCon.value, emp_id: username }));
-		chatCon.value = '';
+		
+		chatSend(room_id,chatCon,username);
 	});
 	
+	//파일 입력
+	var chatFile = document.getElementById("chatFile");
+	console.log(chatFile);
+	chatFile.addEventListener("change", function(){
+		console.log("change");
+		var file = chatFile.files[0];
+		
+		var reader = new FileReader();
+		reader.onload = function(e){
+			console.log(e.target.result);
+		};
+		
+		chatFileSend(room_id,reader.readAsBinaryString(file));
+	});
+	
+	window.addEventListener("beforeunload",function(event){
+		roomOut(room_id, username);
+	});
 };
+
+function enterkey(){
+	if(window.event.keyCode == 13){
+		chatCon = document.getElementById("chatCon");
+		chatSend(room_id,chatCon,username);
+	}
+}
+
+function chatSend(room_id,chatCon,username){
+	if(chatCon.val != ""){
+		stomp.send('/pub/chat/message', {}, JSON.stringify({ room_id: room_id, chat_con: chatCon.value, emp_id: username }));
+		chatCon.value = '';
+	}else{
+		alert('채팅을 입력해 주세요');
+	}
+}
+
+function chatFileSend(room_id, binary){
+	console.log("파일", JSON.stringify({ room_id: room_id, file: binary}));
+	stomp.send('/pub/chat/file', {}, JSON.stringify({ room_id: room_id, file: binary}));
+}
 
 //채팅방 입장 시 
 function roomEnter(room_id,username){
 	stomp.send('/pub/chat/enter', {}, JSON.stringify({ room_id: room_id, emp_id: username }));
+}
+
+function roomOut(room_id, username){
+	stomp.send('/pub/chat/out', {}, JSON.stringify({ room_id: room_id, emp_id: username }));
 }
