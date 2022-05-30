@@ -9,6 +9,7 @@ import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.AbstractWebSocketMessageBrokerConfigurer;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
+import org.springframework.web.socket.config.annotation.WebSocketTransportRegistration;
 
 @Configuration
 @EnableWebSocketMessageBroker//메시지 플로우를 모으기 위해 컴포넌트를 구성
@@ -25,7 +26,7 @@ public class StompWebSocketConfig extends AbstractWebSocketMessageBrokerConfigur
      *     설정할 수 있다.
      *     클라이언트에게 메세지를 전달
      */
-
+	
 	@Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/stompSocket").
@@ -44,9 +45,11 @@ public class StompWebSocketConfig extends AbstractWebSocketMessageBrokerConfigur
         config.enableSimpleBroker("/sub");//수신
     }
     
-    @Override    
-    public boolean configureMessageConverters(List<MessageConverter> messageConverters) {        
-    	messageConverters.add(new ByteArrayMessageConverter());        
-    	return false;    
+    @Override
+    public void configureWebSocketTransport(WebSocketTransportRegistration registration) {
+        registration.setMessageSizeLimit(1024 * 1024); // default : 64 * 1024
+        registration.setSendTimeLimit(500 * 10000); // default : 10 * 10000
+        registration.setSendBufferSizeLimit(30 * 512 * 1024); // default : 512 * 1024
     }
+
 }

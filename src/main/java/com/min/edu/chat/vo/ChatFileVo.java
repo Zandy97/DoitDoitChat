@@ -13,7 +13,6 @@ public class ChatFileVo implements Serializable{
 	private String file_chat_originnm;
 	private String file_chat_type;
 	private String file_uploadpath;
-	private BinaryMessage file;
 	private String room_id;
 	private String chat_id;
 	
@@ -29,7 +28,6 @@ public class ChatFileVo implements Serializable{
 		this.file_chat_originnm = file_chat_originnm;
 		this.file_chat_type = file_chat_type;
 		this.file_uploadpath = file_uploadpath;
-		this.file = file;
 		this.chat_id = chat_id;
 		this.room_id = room_id;
 	}
@@ -74,14 +72,6 @@ public class ChatFileVo implements Serializable{
 		this.file_uploadpath = file_uploadpath;
 	}
 
-	public BinaryMessage getFile() {
-		return file;
-	}
-
-	public void setFile(BinaryMessage file) {
-		this.file = file;
-	}
-
 	public String getRoom_id() {
 		return room_id;
 	}
@@ -102,7 +92,7 @@ public class ChatFileVo implements Serializable{
 	public String toString() {
 		return "ChatFileVo [file_chat_id=" + file_chat_id + ", file_chat_uuid=" + file_chat_uuid
 				+ ", file_chat_originnm=" + file_chat_originnm + ", file_chat_type=" + file_chat_type
-				+ ", file_uploadpath=" + file_uploadpath + ", file=" + file + ", room_id=" + room_id + ", chat_id="
+				+ ", file_uploadpath=" + file_uploadpath + ", room_id=" + room_id + ", chat_id="
 				+ chat_id + "]";
 	}
 }

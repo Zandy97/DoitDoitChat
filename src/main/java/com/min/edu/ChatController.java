@@ -1,12 +1,8 @@
 package com.min.edu;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Base64;
+import java.util.Base64.Decoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,9 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.socket.BinaryMessage;
 
-import com.min.edu.chat.vo.ChatFileVo;
 import com.min.edu.chat.vo.ChatVo;
 
 @Controller
@@ -91,42 +85,9 @@ public class ChatController {
     
     //파일 메시지
     @MessageMapping(value = "/chat/file")
-    public void fileMessage(BinaryMessage file) {
+    public void fileMessage(String file) {
     	logger.info("@ChatController message() : {}", file);
-    
-//    	ByteBuffer byteBuffer = cFVo.getFile().getPayload();
-//    	
-//    	Date date = new Date();
-//    	
-//    	String path = "C:\\goodee\\spring_workspace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\Chatting\\storage\\chatFile\\"+date.getMonth()+"\\"+date.getDay();
-//    	
-//    	File dir = new File(path);
-//    	if(!dir.exists()) {
-//    		dir.mkdirs();
-//    	}
-//    	
-//    	File file = new File(path,"????");
-//    	FileOutputStream out = null;
-//    	FileChannel outChannel = null;
-//    	try {
-//			byteBuffer.flip(); //byteBuffer를 읽기 위해 세팅
-//			out = new FileOutputStream(file, true); //생성을 위해 OutputStream을 연다.
-//			outChannel = out.getChannel(); //채널을 열고
-//			byteBuffer.compact(); //파일을 복사한다.
-//			outChannel.write(byteBuffer); //파일을 쓴다.
-//		}catch(Exception e) {
-//			e.printStackTrace();
-//		}finally {
-//			try {
-//				if(out != null) {
-//					out.close();
-//				}
-//				if(outChannel != null) {
-//					outChannel.close();
-//				}
-//			}catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//		}	
+    	    	
+    	Decoder decoder = Base64.getDecoder();
     }
 }

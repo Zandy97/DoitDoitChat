@@ -9,7 +9,7 @@
 </head>
 <body>
 	<div>
-		<label>${userId }님 채팅에 오신것을 반갑습니다.</label>
+		<label>${principal}님 채팅에 오신것을 반갑습니다.</label>
 	</div>
 	<div>
 		<table>

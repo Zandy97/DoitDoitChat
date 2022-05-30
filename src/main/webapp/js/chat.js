@@ -70,13 +70,14 @@ window.onload = function() {
 	
 	//파일 입력
 	var chatFile = document.getElementById("chatFile");
-	chatFile.onchange = function(e){
-		var fileReader = new FileReader();
-		fileReader.readAsArrayBuffer(e.target.files[0]);
-		fileReader.onload = function(e){
-			var binary = e.target.result;
-			chatFileSend(room_id, binary);
-			console.log("----------",binary)
+	chatFile.onchange = function(){
+		var reader = new FileReader();
+		reader.readAsDataURL(chatFile.files[0]);
+		reader.onload = function(){
+			binary = reader.result;
+			console.log("binary",binary);
+			
+			chatFileSend(binary);
 		}
 	}
 
@@ -101,8 +102,8 @@ function chatSend(room_id,chatCon,username){
 	}
 }
 
-function chatFileSend(room_id, binary){
-	stomp.send('/pub/chat/file',{headers:{ 'content-type': 'application/octet-stream' }}, JSON.stringify({file: binary}));
+function chatFileSend(binary){
+	stomp.send('/pub/chat/file',{}, JSON.stringify({file: binary}));
 }
 
 //채팅방 입장 시 

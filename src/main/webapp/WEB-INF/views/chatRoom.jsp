@@ -40,7 +40,7 @@
 				</tr>
 				<tr>
 					<td>
-						<input multiple="multiple" type="file" name="file" id="chatFile" onchange="fileSend(this)">
+						<input multiple="multiple" type="file" name="file" id="chatFile">
 					</td>
 				</tr>
 			</tfoot>

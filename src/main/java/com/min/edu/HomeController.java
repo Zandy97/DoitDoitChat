@@ -33,20 +33,6 @@ public class HomeController {
 	@Autowired
 	private IChatService service;
 	
-	@RequestMapping(value = "/home.do", method = RequestMethod.GET)
-	public String home(Model model) {
-		logger.info("Welcome home! The client locale is {}.");
-		
-		return "home";
-	}
-	
-	@RequestMapping(value = "/home.do", method = RequestMethod.POST)
-	public String home(HttpSession session, Model model,MemberVo mVo) {		
-		logger.info("home login {}",mVo);
-		model.addAttribute("mem", mVo);
-		return "redirect:/roomList.do";
-	}
-	
     //채팅방 진입시 채팅 내역 조회
     @RequestMapping(value = "/chatRoom.do", method = RequestMethod.GET)
     public String getRoom(String room_Id, HttpSession session, Model model) {
