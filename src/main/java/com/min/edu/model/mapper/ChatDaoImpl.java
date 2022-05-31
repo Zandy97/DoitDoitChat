@@ -15,7 +15,7 @@ import com.min.edu.chat.vo.ChatVo;
 @Repository
 public class ChatDaoImpl implements IChatDao{
 	
-	private String NS = "com.min.edu.model.dao.ChatDaoImpl.";
+	private String NS = "com.doit.gw.mapper.chat.ChatDaoImpl.";
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	

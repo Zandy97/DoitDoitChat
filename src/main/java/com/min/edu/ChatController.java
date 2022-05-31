@@ -1,11 +1,15 @@
 package com.min.edu;
 
+import java.io.File;
 import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Base64.Decoder;
+import java.util.Date;
+
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +17,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.min.edu.chat.vo.ChatVo;
 
@@ -83,11 +92,29 @@ public class ChatController {
         template.convertAndSend("/sub/chat/room/" + cVo.getRoom_id(), cVo);
     }
     
-    //파일 메시지
-    @MessageMapping(value = "/chat/file")
-    public void fileMessage(String file) {
-    	logger.info("@ChatController message() : {}", file);
-    	    	
-    	Decoder decoder = Base64.getDecoder();
-    }
+    @RequestMapping(value = "/saveFile.do", method = RequestMethod.POST)
+    @ResponseBody
+    public String fileMessage(MultipartHttpServletRequest multipartRequest){
+    	logger.info("aveFile 파일저장하기 {}",multipartRequest);
+    	Date date = new Date();
+    	
+    	String path = "C:\\new\\";
+		List<MultipartFile> file = multipartRequest.getFiles("file");
+		logger.info("{}",file);
+//		while(itr.hasNext()) { // 받은파일을 모두
+//			MultipartFile mpFile=multipartRequest.getFile(itr.next());
+//			String originFileName=mpFile.getOriginalFilename(); // 파일명
+//			String fileFullPath = path+originFileName; 
+//			
+//			System.out.println("파일 이름 : "+originFileName);
+//			System.out.println("파일 전체 경로 : "+fileFullPath);
+//
+//			try {
+//				mpFile.transferTo(new File(fileFullPath));//파일 저장. 실제로는 Service에서 처리
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}	
+//		}
+		return "업로드 성공";
+	}
 }
