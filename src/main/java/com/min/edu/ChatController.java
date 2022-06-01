@@ -1,13 +1,18 @@
 package com.min.edu;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,7 +27,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.util.WebUtils;
 
+import com.min.edu.chat.vo.ChatFileVo;
 import com.min.edu.chat.vo.ChatVo;
 
 @Controller
@@ -94,27 +101,66 @@ public class ChatController {
     
     @RequestMapping(value = "/saveFile.do", method = RequestMethod.POST)
     @ResponseBody
-    public String fileMessage(MultipartHttpServletRequest multipartRequest){
+    public void fileMessage(HttpServletRequest req,MultipartHttpServletRequest multipartRequest) throws FileNotFoundException{
     	logger.info("aveFile 파일저장하기 {}",multipartRequest);
+    	
     	Date date = new Date();
     	
-    	String path = "C:\\new\\";
 		List<MultipartFile> file = multipartRequest.getFiles("file");
-		logger.info("{}",file);
-//		while(itr.hasNext()) { // 받은파일을 모두
-//			MultipartFile mpFile=multipartRequest.getFile(itr.next());
-//			String originFileName=mpFile.getOriginalFilename(); // 파일명
-//			String fileFullPath = path+originFileName; 
-//			
-//			System.out.println("파일 이름 : "+originFileName);
-//			System.out.println("파일 전체 경로 : "+fileFullPath);
-//
-//			try {
-//				mpFile.transferTo(new File(fileFullPath));//파일 저장. 실제로는 Service에서 처리
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}	
-//		}
-		return "업로드 성공";
+		
+		String room_id = multipartRequest.getParameter("room_id");
+		String username = multipartRequest.getParameter("username");
+		
+		logger.info("방 번호는 {} / 유저 아이디는 {}",room_id,username);
+		
+		InputStream inputStream = null;
+		OutputStream outputStream = null;
+		
+		for(int i = 0; i < file.size(); i++) {
+			ChatFileVo cFv = new ChatFileVo();
+			
+			String fileName = file.get(i).getOriginalFilename();
+			System.out.println("파일 네임 " + fileName);
+			
+			cFv.setFile_chat_originnm(fileName.substring(0, fileName.lastIndexOf(".")));
+			cFv.setFile_chat_type(fileName.substring(fileName.lastIndexOf(".") + 1));
+			cFv.setFile_chat_uuid(UUID.randomUUID().toString());
+			cFv.setFile_uploadpath(WebUtils.getRealPath(req.getSession().getServletContext(), "/chatFile/"+(date.getMonth()+1)+"/"+date.getDate()));
+			
+			try {
+				inputStream = file.get(i).getInputStream();
+				
+				File storage = new File(cFv.getFile_uploadpath());
+				if(!storage.exists()) {
+					storage.mkdirs();
+				}
+				
+				File newFile = new File(cFv.getFile_uploadpath() + "/" + cFv.getFile_chat_uuid() + "." + cFv.getFile_chat_type());
+				if(newFile.exists()) {
+					newFile.createNewFile();
+				}
+				
+				outputStream = new FileOutputStream(newFile);
+				int read = 0;
+				byte[] b = new byte[(int)file.get(i).getSize()];
+				
+				while ((read = inputStream.read(b)) != -1) {
+					outputStream.write(b,0,read);
+				}
+				logger.info("저장한 ChatFileVo는 {}",cFv);
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		try {
+			inputStream.close();
+			outputStream.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 	}
 }

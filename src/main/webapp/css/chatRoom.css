@@ -1,0 +1,122 @@
+div > div {
+	float: left;
+}
+
+/* 채팅, 파일 */
+.chatGroup{
+	width:288px;
+	height:100%;
+	background-color: #6D6AB7;
+	border: 1px solid black;
+}
+
+/* 참가 리스트 layout */
+.memberList{
+	width:220px;
+	height: 100%;
+}
+
+/* memberList 안에 */
+.members{
+	width: 100%;
+	height: 725px;
+	background-color: #B5B2FF;
+}
+
+/* 각 영역 상단 부분 */
+.roomInfo{
+	width: 100%;
+	height: 75px;
+	background-color: #F6F6F6;
+}
+
+/* 채팅방 입력 부분 */
+.insChat{
+	width: 100%;
+	height: 150px;
+	background-color: #FAFAFA; 
+}
+
+.inputArea{
+	width : 268px;
+	height: 100px;
+	margin : 10px;	
+}
+
+textarea{
+	resize: none;
+}
+
+#btnSend{
+	margin-top : 30px; 
+	margin-left : 15px;
+}
+
+#fileIcon{
+	margin-left: 10px;
+	position: relative;
+	bottom: 5px;
+	width: 30px;
+}
+
+/* 채팅 리스트 */
+#dragdrop{
+	border-radius: 3px;
+}
+
+#chatList{
+	width: 100%;
+	height: 575px;	
+	vertical-align: bottom;
+}
+
+#chatLog {
+    height: 575px;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.myMsg {
+	width:265px;
+    text-align: right;
+    margin-bottom: 5px;
+}
+
+.anotherMsg {
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+.msg {
+    display: inline-block;
+    border-radius: 15px;
+    padding: 7px 15px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
+
+.anotherMsg > .msg {
+    background-color: #f1f0f0;
+}
+
+.myMsg > .msg {
+    background-color: #0084FF;
+    color: #fff;
+}
+
+.msg{
+	max-width: 200px;
+	white-space: pre-wrap;
+}
+
+.Name {
+    font-size: 12px;
+    display: block;
+}
+
+
+/* 채팅방 멤버 리스트 */
+
+
+
+

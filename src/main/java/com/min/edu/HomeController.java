@@ -28,7 +28,7 @@ import com.min.edu.model.service.IChatService;
 @SessionAttributes("mem")
 public class HomeController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	private Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@Autowired
 	private IChatService service;

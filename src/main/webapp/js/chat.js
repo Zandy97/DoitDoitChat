@@ -4,7 +4,7 @@ var username;
 var chatCon;
 
 // 파일 중복 업로드 방지용 맵을 선언한다.
-var map = new Map(); // Map.prototype(); 객체는 언제나 함수형태로 생성
+//var map = new Map(); // Map.prototype(); 객체는 언제나 함수형태로 생성
 //파일 업로드
 var fd = new FormData();
 // form 에 데이터 추가 시 동적으로 name 을 주기 위해 사용
@@ -66,10 +66,10 @@ $(document).ready(function() {
 		
 	});
 	// 채팅입력
-	var btnSend = $("#chatSend");
-	btnSend.on("click",function(){
+	$("#chatSend").on("click",function(){
 		chatCon = $("#chatCon");
-		console.log("send",chatCon.value);
+		console.log("chatCon", chatCon);
+		console.log("send",chatCon.val());
 		
 		chatSend(room_id,chatCon,username);
 	});
@@ -86,7 +86,7 @@ $(document).ready(function() {
 				//브라우저에서 기본으로 제공하는 드래그앤드롭 이벤트를 막아줘야 정상작동
 				e.stopPropagation(); // 브라우저가 해당 이벤트에 대해 수행하는 기본적인 작업을 방지. 예를 들어 파일을 내려놓을 때 새탭으로 파일정보를 보여주는 이벤트를 방지 
 				e.preventDefault(); // 나를 둘러싸고 있는 이벤트의 추가전파 방지
-				$(this).css('border', '2px solid red');
+				$(this).css('border', '1px solid red');
 			});
 	// dragover : 드래그하면서 마우스가 대상 객체의 위에 자리 잡고 있을 때 발생함.
 	$(document).on("dragover", "#dragdrop",
@@ -102,7 +102,8 @@ $(document).ready(function() {
 		// DROP 되는 위치에 들어온 파일 정보를 배열 형태로 받아온다.
 		// drag&drop 한 모든 파일들의 정보를 가진 FileList 객체
 		var files = e.originalEvent.dataTransfer.files;
-		console.log(files);
+		console.log("files",files);
+		$(this).css('border', '1px solid black');
 		// DIV에 DROP 이벤트가 발생 했을 때 다음을 호출한다.
 		handleFileUpload(files);
 	});
@@ -114,7 +115,6 @@ $(document).ready(function() {
 	$(document).on('dragover', function(e) {
 		e.stopPropagation();
 		e.preventDefault();
-		objDragAndDrop.css('border', '2px solid #0B85A1');
 	});
 	$(document).on('drop', function(e) {
 		e.stopPropagation();
@@ -122,6 +122,7 @@ $(document).ready(function() {
 	});
 	
 	function handleFileUpload(files) {
+		console.log("handle에 ",files);
 		// 파일의 길이만큼 반복하며 formData에 셋팅해준다.
 		var megaByte = 1024*1024;
 		console.log(files.length);
@@ -131,6 +132,7 @@ $(document).ready(function() {
 				// 중복되는 정보 확인 위해 콘솔에 찍음
 				alert(files[i].name+"은(는) \n 10메가 보다 커서 업로드가 할 수 없습니다.");
 			}else{
+				console.log("append", files[i]);
 				fd.append('file', files[i]);
 			}
 		}
@@ -147,7 +149,7 @@ function enterkey(){
 
 function chatSend(room_id,chatCon,username){
 	if(chatCon.val != ""){
-		stomp.send('/pub/chat/message', {}, JSON.stringify({ room_id: room_id, chat_con: chatCon.value, emp_id: username }));
+		stomp.send('/pub/chat/message', {}, JSON.stringify({ room_id: room_id, chat_con: chatCon.val(), emp_id: username }));
 		chatCon.value = '';
 	}else{
 		alert('채팅을 입력해 주세요');
@@ -159,13 +161,19 @@ function roomEnter(room_id,username){
 	stomp.send('/pub/chat/enter', {}, JSON.stringify({ room_id: room_id, emp_id: username }));
 }
 
+//채팅방 닫기 실행 시
 function roomOut(room_id, username){
 	stomp.send('/pub/chat/out', {}, JSON.stringify({ room_id: room_id, emp_id: username }));
 }
 
 function sendFileToServer(fd) {
+	
+	//FormData()에 room_id와 username 추가
+	fd.append('room_id',room_id);
+	fd.append('username',username);
+	
 	var uploadURL = "./saveFile.do"; 
-	jQuery.ajax({
+	$.ajax({
 		type : "POST",
 		data : fd,
 		url : uploadURL,

@@ -2,7 +2,7 @@ package com.min.edu.chat.vo;
 
 import java.io.Serializable;
 
-import org.springframework.web.socket.BinaryMessage;
+import org.springframework.web.multipart.MultipartFile;
 
 public class ChatFileVo implements Serializable{
 	
@@ -14,14 +14,13 @@ public class ChatFileVo implements Serializable{
 	private String file_chat_type;//file 형식
 	private String file_uploadpath;//file 경로
 	private String room_id;//room_id
-	private String emp_id;//emp_id
 	
 	public ChatFileVo() {
 		super();
 	}
 
-	public ChatFileVo(String file_chat_id, String file_chat_uuid, String file_chat_originnm, String file_chat_type,
-			String file_uploadpath, String room_id, String emp_id) {
+	public ChatFileVo(String file_chat_id, String file_chat_uuid, String file_chat_originnm,
+			String file_chat_type, String file_uploadpath, String room_id) {
 		super();
 		this.file_chat_id = file_chat_id;
 		this.file_chat_uuid = file_chat_uuid;
@@ -79,18 +78,14 @@ public class ChatFileVo implements Serializable{
 		this.room_id = room_id;
 	}
 
-	public String getEmp_id() {
-		return emp_id;
-	}
-
-	public void setEmp_id(String emp_id) {
-		this.emp_id = emp_id;
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	@Override
 	public String toString() {
 		return "ChatFileVo [file_chat_id=" + file_chat_id + ", file_chat_uuid=" + file_chat_uuid
 				+ ", file_chat_originnm=" + file_chat_originnm + ", file_chat_type=" + file_chat_type
-				+ ", file_uploadpath=" + file_uploadpath + ", room_id=" + room_id + ", emp_id=" + emp_id + "]";
+				+ ", file_uploadpath=" + file_uploadpath + ", room_id=" + room_id + "]";
 	}
 }
