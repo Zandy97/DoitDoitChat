@@ -92,4 +92,4 @@
 - 데이터베이스 도구 <img src="https://img.shields.io/badge/DBeaver-509EE3?style=for-the-badge&logo=Metabase&logoColor=white">
 
 ### 6.ERD-Diagram
-![GroupWare ERD](https://user-images.githubusercontent.com/101374824/173857783-c9e4c197-93ec-4214-a919-136393a633f4.png)
+![image](https://user-images.githubusercontent.com/90457808/175962524-9dac4ba0-3e2a-4c8c-bb92-4b54092cea5d.png)
